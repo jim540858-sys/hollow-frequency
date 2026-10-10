@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Archive" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Frequency Archive</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+    html,body{height:100%;height:100dvh}
+    body{font-family:"Courier New",Courier,monospace;background:#0a0a0a;color:#c8c8c8;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    .illuminati-bg{position:fixed;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;opacity:0.18;pointer-events:none}
+    .illuminati-bg svg{width:min(90vw,520px);height:auto;filter:drop-shadow(0 0 30px rgba(180,140,40,0.25))}
+    .app-container{position:relative;z-index:1;width:min(92vw,380px);background:rgba(12,12,14,0.94);border:1px solid #2a2a2a;border-radius:14px;padding:28px 22px 32px;box-shadow:0 0 50px rgba(0,0,0,0.85)}
+    .status-bar{position:absolute;top:12px;left:16px;right:16px;font-size:10px;color:#444;display:flex;justify-content:space-between;letter-spacing:1px}
+    .header{text-align:center;margin:22px 0 28px;border-bottom:1px solid #222;padding-bottom:16px}
+    .header h1{font-size:15px;letter-spacing:3px;text-transform:uppercase;color:#8a8a8a;font-weight:normal}
+    .header .sub{font-size:11px;color:#555;margin-top:6px;letter-spacing:1px}
+    .buttons{display:flex;flex-direction:column;gap:12px}
+    button{background:#141416;border:1px solid #333;color:#b0b0b0;font-family:inherit;font-size:14px;letter-spacing:1px;padding:16px 14px;border-radius:8px;cursor:pointer;transition:all 0.15s ease;text-align:left;width:100%}
+    button:active{transform:scale(0.97);background:#1c1c1f}
+    button .label{display:block}
+    button .hint{display:block;font-size:10px;color:#555;margin-top:4px;letter-spacing:0.5px}
+    .glitch-overlay{position:fixed;inset:0;z-index:100;pointer-events:none;opacity:0;background:#000}
+    .glitch-overlay.active{opacity:1;animation:glitchFlash 0.07s steps(2) infinite}
+    @keyframes glitchFlash{0%{background:#000}25%{background:#1a0000}50%{background:#000}75%{background:#001a00}100%{background:#000}}
+    .scanlines{position:fixed;inset:0;z-index:101;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px)}
+    .scanlines.active{opacity:1}
+    .noise{position:fixed;inset:0;z-index:102;pointer-events:none;opacity:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");background-size:140px}
+    .noise.active{opacity:0.4;animation:noiseMove 0.1s steps(3) infinite}
+    @keyframes noiseMove{0%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-3%)}75%{transform:translate(-2%,4%)}100%{transform:translate(0,0)}}
+    .full-screen{position:fixed;inset:0;z-index:200;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#ff2222;font-size:17px;letter-spacing:3px;text-transform:uppercase;text-align:center;padding:24px}
+    .full-screen.visible{display:flex}
+    .full-screen .small{font-size:11px;color:#666;letter-spacing:2px;margin-top:14px}
+    .install-bar{width:min(70vw,260px);height:4px;background:#222;border-radius:2px;margin-top:28px;overflow:hidden}
+    .install-bar .fill{height:100%;width:0%;background:#c9a227;transition:width 0.15s linear}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.6) 100%)}
+  </style>
+</head>
+<body>
+  <div class="illuminati-bg">
+    <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <path d="M100 10 L190 190 L10 190 Z" stroke="#c9a227" stroke-width="3" fill="rgba(201,162,39,0.08)"/>
+      <path d="M100 55 L155 160 L45 160 Z" stroke="#c9a227" stroke-width="1.5" fill="none"/>
+      <ellipse cx="100" cy="115" rx="28" ry="18" stroke="#c9a227" stroke-width="2" fill="rgba(0,0,0,0.6)"/>
+      <circle cx="100" cy="115" r="9" fill="#c9a227"/>
+      <circle cx="100" cy="115" r="4" fill="#0a0a0a"/>
+      <line x1="100" y1="70" x2="100" y2="55" stroke="#c9a227" stroke-width="1.5"/>
+      <line x1="70" y1="95" x2="55" y2="85" stroke="#c9a227" stroke-width="1.2"/>
+      <line x1="130" y1="95" x2="145" y2="85" stroke="#c9a227" stroke-width="1.2"/>
+      <line x1="65" y1="130" x2="48" y2="140" stroke="#c9a227" stroke-width="1.2"/>
+      <line x1="135" y1="130" x2="152" y2="140" stroke="#c9a227" stroke-width="1.2"/>
+      <line x1="25" y1="190" x2="175" y2="190" stroke="#c9a227" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="app-container" id="mainApp">
+    <div class="status-bar">
+      <span>FREQ.ARCHIVE v0.9.1</span>
+      <span id="clock">--:--</span>
+    </div>
+    <div class="header">
+      <h1>Signal Recovery</h1>
+      <div class="sub">Restricted Access // Do Not Share</div>
+    </div>
+    <div class="buttons">
+      <button id="btnTransmissions">
+        <span class="label">Recovered Transmissions</span>
+        <span class="hint">23 files available</span>
+      </button>
+      <button id="btnArchives">
+        <span class="label">Archives</span>
+        <span class="hint">Index incomplete</span>
+      </button>
+      <button id="btnSure">
+        <span class="label">Are you sure?</span>
+        <span class="hint">—</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="glitch-overlay" id="glitchOverlay"></div>
+  <div class="scanlines" id="scanlines"></div>
+  <div class="noise" id="noise"></div>
+
+  <div class="full-screen" id="crashScreen">
+    <div>FATAL ERROR</div>
+    <div class="small">process terminated</div>
+  </div>
+
+  <div class="full-screen" id="installScreen" style="color:#c9a227">
+    <div>INSTALLING</div>
+    <div class="small" style="color:#888">History</div>
+    <div class="install-bar"><div class="fill" id="installFill"></div></div>
+  </div>
+
+  <audio id="horrorAudio" preload="auto">
+    <source src="data:audio/mpeg;base64,SUQzBAAAAAAAX1RYWFgAAAAyAAADZmlzaC5hdWRpbyB0YXNrAGY4ZmYwNjQ1OTRmZTRlMDg5ODU2ODM2YjUxYjVhNjVkAFRTU0UAAAA PAAAAAExhdmY2MC4xNi4xMDAAAAAAAAAAAAAA//tQxAADB8AhSmAAACMAAAA0gAAAAExBTUUzLjk4LjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tQxAADEwAhSmAAACcAAAAnAAAAA0NVTkYAAAAA" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    function updateClock(){
+      const now=new Date();
+      document.getElementById("clock").textContent=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+    }
+    updateClock();
+    setInterval(updateClock,20000);
+
+    document.getElementById("btnTransmissions").addEventListener("click",()=>{alert("Access denied.\n\nClearance level insufficient.");});
+    document.getElementById("btnArchives").addEventListener("click",()=>{alert("Archive index corrupted.\n\nRetry later.");});
+
+    document.getElementById("btnSure").addEventListener("click",startSequence);
+
+    function startSequence(){
+      const overlay=document.getElementById("glitchOverlay");
+      const scanlines=document.getElementById("scanlines");
+      const noise=document.getElementById("noise");
+      const crashScreen=document.getElementById("crashScreen");
+      const installScreen=document.getElementById("installScreen");
+      const fill=document.getElementById("installFill");
+      const audio=document.getElementById("horrorAudio");
+      const mainApp=document.getElementById("mainApp");
+
+      document.getElementById("btnSure").disabled=true;
+
+      overlay.classList.add("active");
+      scanlines.classList.add("active");
+      noise.classList.add("active");
+
+      let shakes=0;
+      const shake=setInterval(()=>{
+        const x=(Math.random()-0.5)*16;
+        const y=(Math.random()-0.5)*12;
+        mainApp.style.transform=`translate(${x}px,${y}px)`;
+        if(++shakes>45) clearInterval(shake);
+      },35);
+
+      // Play audio immediately on user gesture (critical for mobile)
+      audio.currentTime=0;
+      audio.volume=1;
+      const playPromise=audio.play();
+      if(playPromise!==undefined){
+        playPromise.catch(e=>{
+          console.log("Audio play failed",e);
+          setTimeout(()=>{audio.play().catch(()=>{});},200);
+        });
+      }
+
+      setTimeout(()=>{crashScreen.classList.add("visible");},2600);
+
+      setTimeout(()=>{
+        crashScreen.classList.remove("visible");
+        installScreen.classList.add("visible");
+        let progress=0;
+        const bar=setInterval(()=>{
+          progress+=Math.random()*18+6;
+          if(progress>=100){
+            progress=100;
+            clearInterval(bar);
+            setTimeout(()=>{
+              try{localStorage.setItem("hollow_triggered",Date.now());}catch(e){}
+              window.location.href="history.html";
+            },600);
+          }
+          fill.style.width=progress+"%";
+        },180);
+      },4800);
+    }
+  </script>
+</body>
+</html>
