@@ -1,1 +1,72 @@
-PLACEHOLDER_WILL_BE_REPLACED
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Archive"/>
+<title>Frequency Archive</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{height:100%;height:100dvh}
+body{font-family:"Courier New",Courier,monospace;background:#0a0a0a;color:#c8c8c8;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.bg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.18;pointer-events:none}
+.bg svg{width:min(90vw,480px)}
+.card{position:relative;z-index:1;width:min(92vw,360px);background:rgba(12,12,14,0.95);border:1px solid #2a2a2a;border-radius:14px;padding:26px 20px 30px;box-shadow:0 0 40px #000}
+.status{position:absolute;top:10px;left:14px;right:14px;font-size:10px;color:#444;display:flex;justify-content:space-between}
+h1{font-size:14px;letter-spacing:3px;text-transform:uppercase;color:#8a8a8a;text-align:center;margin:18px 0 6px;font-weight:normal}
+.sub{font-size:11px;color:#555;text-align:center;margin-bottom:22px}
+button{display:block;width:100%;background:#141416;border:1px solid #333;color:#b0b0b0;font-family:inherit;font-size:14px;letter-spacing:1px;padding:15px 12px;border-radius:8px;margin-bottom:10px;text-align:left}
+button:active{transform:scale(0.97);background:#1c1c1f}
+button .h{display:block;font-size:10px;color:#555;margin-top:3px}
+.g{position:fixed;inset:0;z-index:100;pointer-events:none;opacity:0;background:#000}
+.g.on{opacity:1;animation:gf 0.07s steps(2) infinite}
+@keyframes gf{0%{background:#000}25%{background:#1a0000}50%{background:#000}75%{background:#001a00}100%{background:#000}}
+.s{position:fixed;inset:0;z-index:101;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.2) 2px,rgba(0,0,0,0.2) 4px)}
+.s.on{opacity:1}
+.n{position:fixed;inset:0;z-index:102;pointer-events:none;opacity:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");background-size:130px}
+.n.on{opacity:0.4;animation:nm 0.1s steps(3) infinite}
+@keyframes nm{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-2%)}100%{transform:translate(0,0)}}
+.fs{position:fixed;inset:0;z-index:200;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#ff2222;font-size:16px;letter-spacing:3px;text-transform:uppercase;text-align:center}
+.fs.on{display:flex}
+.fs .sm{font-size:11px;color:#666;margin-top:12px;letter-spacing:2px}
+.bar{width:min(65vw,240px);height:4px;background:#222;border-radius:2px;margin-top:24px;overflow:hidden}
+.bar .f{height:100%;width:0;background:#c9a227;transition:width .15s linear}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.55) 100%)}
+</style>
+</head>
+<body>
+<div class="bg"><svg viewBox="0 0 200 220" fill="none"><path d="M100 10 L190 190 L10 190 Z" stroke="#c9a227" stroke-width="3" fill="rgba(201,162,39,0.08)"/><path d="M100 55 L155 160 L45 160 Z" stroke="#c9a227" stroke-width="1.5"/><ellipse cx="100" cy="115" rx="28" ry="18" stroke="#c9a227" stroke-width="2" fill="rgba(0,0,0,0.6)"/><circle cx="100" cy="115" r="9" fill="#c9a227"/><circle cx="100" cy="115" r="4" fill="#0a0a0a"/><line x1="100" y1="70" x2="100" y2="55" stroke="#c9a227" stroke-width="1.5"/><line x1="70" y1="95" x2="55" y2="85" stroke="#c9a227" stroke-width="1.2"/><line x1="130" y1="95" x2="145" y2="85" stroke="#c9a227" stroke-width="1.2"/><line x1="65" y1="130" x2="48" y2="140" stroke="#c9a227" stroke-width="1.2"/><line x1="135" y1="130" x2="152" y2="140" stroke="#c9a227" stroke-width="1.2"/><line x1="25" y1="190" x2="175" y2="190" stroke="#c9a227" stroke-width="2"/></svg></div>
+<div class="card" id="app">
+<div class="status"><span>FREQ.ARCHIVE v0.9.1</span><span id="ck">--:--</span></div>
+<h1>Signal Recovery</h1>
+<div class="sub">Restricted Access // Do Not Share</div>
+<button id="b1"><span>Recovered Transmissions</span><span class="h">23 files available</span></button>
+<button id="b2"><span>Archives</span><span class="h">Index incomplete</span></button>
+<button id="b3"><span>Are you sure?</span><span class="h">—</span></button>
+</div>
+<div class="g" id="g"></div>
+<div class="s" id="s"></div>
+<div class="n" id="n"></div>
+<div class="fs" id="crash"><div>FATAL ERROR</div><div class="sm">process terminated</div></div>
+<div class="fs" id="inst" style="color:#c9a227"><div>INSTALLING</div><div class="sm" style="color:#888">History</div><div class="bar"><div class="f" id="fill"></div></div></div>
+<audio id="a" preload="auto"><source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQxAADB8AhSmAAACMAAAA0gAAAAExBTUUzLjk4LjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tQxAADEwAhSmAAACcAAAAnAAAAA0NVTkYAAAAA" type="audio/mpeg"/></audio>
+<script>
+function t(){const n=new Date();document.getElementById("ck").textContent=String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0")}
+t();setInterval(t,2e4);
+document.getElementById("b1").onclick=()=>alert("Access denied.\n\nClearance level insufficient.");
+document.getElementById("b2").onclick=()=>alert("Archive index corrupted.\n\nRetry later.");
+document.getElementById("b3").onclick=()=>{
+  const g=document.getElementById("g"),s=document.getElementById("s"),n=document.getElementById("n"),c=document.getElementById("crash"),i=document.getElementById("inst"),f=document.getElementById("fill"),a=document.getElementById("a"),m=document.getElementById("app");
+  document.getElementById("b3").disabled=true;
+  g.classList.add("on");s.classList.add("on");n.classList.add("on");
+  let k=0;const sh=setInterval(()=>{m.style.transform="translate("+((Math.random()-0.5)*14)+"px,"+((Math.random()-0.5)*10)+"px)";if(++k>40)clearInterval(sh)},35);
+  a.currentTime=0;a.volume=1;a.play().catch(()=>setTimeout(()=>a.play().catch(()=>{}),150));
+  setTimeout(()=>c.classList.add("on"),2400);
+  setTimeout(()=>{c.classList.remove("on");i.classList.add("on");let p=0;const b=setInterval(()=>{p+=Math.random()*20+8;if(p>=100){p=100;clearInterval(b);setTimeout(()=>{try{localStorage.setItem("hf",Date.now())}catch(e){}location.href="history.html"},500)}f.style.width=p+"%"},160)},4500);
+};
+</script>
+</body>
+</html>
